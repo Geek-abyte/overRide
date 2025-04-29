@@ -15,10 +15,9 @@ export default function NotFound() {
         <h1 className="text-accent text-9xl font-bold mb-3 font-space-grotesk">404</h1>
         
         <h2 className="text-3xl font-bold text-[#ccd6f6] mb-4">Page Not Found</h2>
-        
-        <p className="text-[#8892b0] mb-8">
-          Oops! The page you're looking for seems to have wandered off into the digital void.
-          Let's get you back to the known universe.
+          <p className="text-[#8892b0] mb-8">
+          Oops! The page you&apos;re looking for seems to have wandered off into the digital void.
+          Let&apos;s get you back to the known universe.
         </p>
         
         <Link

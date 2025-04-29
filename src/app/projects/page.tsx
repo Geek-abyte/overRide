@@ -16,9 +16,8 @@ export default function ProjectsPage() {
         <h1 className="text-4xl md:text-5xl font-bold mb-8 text-primary font-space-grotesk">
           Projects Archive
         </h1>
-        
-        <p className="text-secondary max-w-2xl mb-12">
-          A collection of projects I've worked on, ranging from web applications and design systems 
+          <p className="text-secondary max-w-2xl mb-12">
+          A collection of projects I&apos;ve worked on, ranging from web applications and design systems 
           to experiments and open-source contributions.
         </p>
         
@@ -31,8 +30,7 @@ export default function ProjectsPage() {
               <div>
                 <h3 className="text-xl font-medium text-primary mb-2">
                   Project {index + 1}
-                </h3>
-                <p className="text-secondary">
+                </h3>                <p className="text-secondary">
                   {index % 3 === 0 
                     ? 'A full-stack web application built with Next.js, TypeScript and MongoDB'
                     : index % 3 === 1

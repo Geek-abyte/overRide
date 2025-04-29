@@ -60,7 +60,7 @@ export default function ResumePage() {
               <p className="text-accent font-mono mb-1">Stanford University</p>
               <p className="text-secondary text-sm mb-4">September 2019 - June 2021</p>
               <p className="text-secondary">
-                Specialized in Artificial Intelligence and Human-Computer Interaction. Thesis on "Generative Adversarial Networks for Creative 3D Modeling."
+                Specialized in Artificial Intelligence and Human-Computer Interaction. Thesis on &quot;Generative Adversarial Networks for Creative 3D Modeling.&quot;
               </p>
             </div>
             
@@ -87,7 +87,7 @@ export default function ResumePage() {
               <p className="text-accent font-mono mb-1">Google</p>
               <p className="text-secondary text-sm mb-4">January 2022 - Present</p>
               <ul className="text-secondary list-disc pl-6 space-y-2">
-                <li>Lead developer for Google's internal design system, improving component reusability and accessibility.</li>
+                <li>Lead developer for Google&apos;s internal design system, improving component reusability and accessibility.</li>
                 <li>Architected and implemented frontend systems handling millions of daily users.</li>
                 <li>Mentored junior engineers and conducted technical interviews for prospective team members.</li>
               </ul>
@@ -105,7 +105,7 @@ export default function ResumePage() {
               <p className="text-accent font-mono mb-1">Facebook</p>
               <p className="text-secondary text-sm mb-4">June 2019 - December 2021</p>
               <ul className="text-secondary list-disc pl-6 space-y-2">
-                <li>Developed and maintained React components for Facebook's core platforms.</li>
+                <li>Developed and maintained React components for Facebook&apos;s core platforms.</li>
                 <li>Improved application performance by 35% through code optimization and lazy loading.</li>
                 <li>Collaborated with design teams to implement consistent UI/UX experiences.</li>
               </ul>
@@ -123,7 +123,7 @@ export default function ResumePage() {
               <p className="text-accent font-mono mb-1">Microsoft</p>
               <p className="text-secondary text-sm mb-4">May 2018 - August 2018</p>
               <ul className="text-secondary list-disc pl-6 space-y-2">
-                <li>Contributed to the development of Visual Studio Code's extension API.</li>
+                <li>Contributed to the development of Visual Studio Code&apos;s extension API.</li>
                 <li>Built internal tools for developer productivity using TypeScript and Node.js.</li>
               </ul>
               <div className="mt-4 flex flex-wrap gap-2">
