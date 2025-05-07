@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#27221F" />
+  <rect x="8" y="8" width="16" height="16" fill="#448F3D" />
+  <rect x="24" y="8" width="16" height="16" fill="#8F6145" />
+  <rect x="40" y="8" width="16" height="16" fill="#448F3D" />
+  <rect x="8" y="24" width="16" height="16" fill="#8F6145" />
+  <rect x="24" y="24" width="16" height="16" fill="#448F3D" />
+  <rect x="40" y="24" width="16" height="16" fill="#8F6145" />
+  <rect x="8" y="40" width="16" height="16" fill="#448F3D" />
+  <rect x="24" y="40" width="16" height="16" fill="#8F6145" />
+  <rect x="40" y="40" width="16" height="16" fill="#448F3D" />
+  <text x="14" y="40" font-family="Arial" font-weight="bold" font-size="32" fill="#E0D5C7">JO</text>
+</svg>

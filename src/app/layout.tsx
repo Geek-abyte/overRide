@@ -1,26 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Pixelify_Sans } from "next/font/google";
 import "./globals.css";
-import PageTransition from "@/components/PageTransition";
+import MinecraftCursor from "@/components/ui/MinecraftCursor";
 
-const inter = Inter({
-  variable: "--font-inter",
+const pixelifySans = Pixelify_Sans({
+  variable: "--font-pixelify-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
+// Courier is already available on most systems, so we'll define it in CSS
+// and reference it as a fallback
 
 export const metadata: Metadata = {
-  title: "Jeremiah Oladele | Full Stack Developer",
-  description: "Portfolio website of Jeremiah Oladele, showcasing creative projects and skills",
-  keywords: ["developer", "portfolio", "jeremiah oladele", "software engineer", "web development"],
-  authors: [{ name: "Jeremiah Oladele" }],
+  title: "Jeremiah Oladele | Developer Portfolio",
+  description: "A Minecraft-themed portfolio showcasing the work of Jeremiah Oladele, a developer who builds creative digital experiences.",
+  keywords: ["Jeremiah Oladele", "Web Developer", "Software Engineer", "Portfolio", "Minecraft"],
+  icons: {
+    icon: [
+      { url: '/favicon.svg' },
+    ],
+  }
 };
-
-import ClientCursorWrapper from '@/components/ClientCursorWrapper';
 
 export default function RootLayout({
   children,
@@ -28,17 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${pixelifySans.variable} antialiased`}
       >
-        <PageTransition />
+        <MinecraftCursor />
         {children}
-        
-        {/* CustomCursor is client component */}
-        <div id="custom-cursor" suppressHydrationWarning>
-          {typeof window === 'undefined' ? null : <ClientCursorWrapper />}
-        </div>
       </body>
     </html>
   );

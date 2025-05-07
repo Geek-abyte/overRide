@@ -1,141 +1,368 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
-  /* Dark mode colors (default) */
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --accent: #64ffda;
-  --primary: #ccd6f6;
-  --secondary: #8892b0;
-  --card-bg: #112240;
-  --card-border: #1d293a;
+  /* Minecraft-inspired color palette */
+  --background: #27221F;
+  --foreground: #E0D5C7;
+  --primary: #448F3D;
+  --secondary: #8F6145;
+  --accent: #6F95D3;
+  --dirt: #9B7653;
+  --stone: #7A7A7A;
+  --grass: #5D9C41;
+  --wood: #A0693E;
+  --water: #4C6BE0;
+  --lava: #EC6A17;
+  
+  /* Font family variables */
+  --font-main: var(--font-pixelify-sans), 'Pixelify Sans', system-ui, sans-serif;
+  --font-secondary: 'Courier New', Courier, monospace;
 }
 
-html.light-mode {
-  /* Light mode colors */
-  --background: #f5f5f5;
-  --foreground: #1f1f1f;
-  --accent: #0a9373;
-  --primary: #2d3748;
-  --secondary: #4a5568;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #27221F;
+    --foreground: #E0D5C7;
+  }
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--background);
+  color: var(--foreground);
+  cursor: none !important;
+}
+
+/* Apply Courier for secondary text */
+p, span, .font-secondary {
+  font-family: var(--font-secondary);
+}
+
+/* Main headings and important elements use Pixelify Sans */
+h1, h2, h3, h4, h5, h6, 
+.font-main, 
+button, 
+.btn, 
+nav a {
+  font-family: var(--font-main);
+}
+
+html, body {
+  cursor: none !important;
+}
+
+a, button, [role="button"], [onclick], .cursor-pointer, input[type="submit"] {
+  cursor: none !important;
+}
+
+/* Minecraft-style animations */
+@keyframes pixelate {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Text animations for Minecraft theme */
+@keyframes minecraft-text-reveal {
+  0% {
+    transform: translateY(10px) scale(0.8);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  
+  20% {
+    transform: translateY(5px) scale(0.9);
+    opacity: 0.3;
+    filter: blur(2px);
+  }
+  
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes minecraft-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(68, 143, 61, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(68, 143, 61, 0.8);
+  }
+}
+
+@keyframes minecraft-block-appear {
+  0% {
+    transform: translateY(5px) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-2px) scale(1.1);
+  }
+  80% {
+    transform: translateY(1px) scale(0.95);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes minecraft-letter-appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pixel-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Minecraft UI Elements Animations */
+@keyframes minecraft-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes minecraft-dig {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes timeline-grow {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+/* Base styles */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Button styles */
+.minecraft-btn {
+  background-color: var(--stone);
+  color: white;
+  border: 2px solid #000;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.minecraft-btn:hover {
+  background-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.minecraft-btn:active {
+  transform: translateY(0);
+}
+
+/* Utility classes */
+.pixelated {
+  image-rendering: pixelated;
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+}
+
+/* Minecraft text animation classes */
+.minecraft-text-animated {
+  display: inline-block;
+}
+
+.minecraft-text-animated span {
+  display: inline-block;
+  opacity: 0;
+  animation: minecraft-letter-appear 0.8s forwards;
+  animation-fill-mode: both;
+}
+
+.minecraft-text-glow {
+  animation: minecraft-glow 2s ease-in-out infinite;
+}
+
+.minecraft-text-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: minecraft-text-reveal 0.8s forwards;
+  animation-fill-mode: both;
+}
+
+.minecraft-text-bounce {
+  display: inline-block;
+  animation: pixel-bounce 2s ease-in-out infinite;
+}
+
+.minecraft-block {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: minecraft-block-appear 0.5s forwards;
+  animation-fill-mode: both;
+  box-shadow: 
+    inset -2px -2px 0 rgba(0, 0, 0, 0.25),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.minecraft-pixelated-text {
+  display: inline-block;
+  image-rendering: pixelated;
+  font-family: var(--font-mono);
+  letter-spacing: -0.5px;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3));
+  transition: all 0.2s ease;
+}
+
+.minecraft-pixelated-text:hover {
+  transform: scale(1.05);
+}
+
+@keyframes pixelate {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
 }
 
-@layer utilities {
-  /* Custom color classes */
-  .text-accent {
-    color: var(--accent);
-  }
+.minecraft-btn {
+  background-color: var(--stone);
+  color: white;
+  border: 2px solid #000;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-minecraft);
+  text-transform: uppercase;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
 
-  .text-primary {
-    color: var(--primary);
-  }
+.minecraft-btn:hover {
+  background-color: var(--primary);
+  transform: translateY(-2px);
+}
 
-  .text-secondary {
-    color: var(--secondary);
-  }
+.minecraft-btn:active {
+  transform: translateY(0);
+}
 
-  .border-accent {
-    border-color: var(--accent);
-  }
+.pixelated {
+  image-rendering: pixelated;
+}
 
-  .bg-card {
-    background-color: var(--card-bg);
-  }
+.section-title {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: var(--accent);
+}
 
-  .border-card {
-    border-color: var(--card-border);
-  }
-
-  .text-heading {
-    color: var(--primary);
-    font-weight: 700;
-    font-family: var(--font-space-grotesk);
-  }
-  
-  .text-gradient {
-    background: linear-gradient(to right, var(--accent), #a8b2d1, var(--primary));
-    background-clip: text;
-    color: transparent;
-  }
-  
-  .link-hover {
-    position: relative;
-  }
-  
-  .link-hover::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background-color: var(--accent);
-    transition: all 0.3s ease;
-  }
-  
-  .link-hover:hover::after {
-    width: 100%;
-  }
-  
-  .card-glow {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.5rem;
-    border: 1px solid var(--card-border);
-    background-color: rgba(13, 22, 41, 0.3);
-    padding: 1.5rem;
-    backdrop-filter: blur(4px);
-  }
-  
-  .card-glow::before {
-    content: '';
-    position: absolute;
-    z-index: -10;
-    height: 200px;
-    width: 200px;
-    border-radius: 9999px;
-    background-color: rgba(100, 255, 218, 0.2);
-    opacity: 0;
-    filter: blur(24px);
-    transition: opacity 0.3s ease;
-  }
-  
-  .card-glow:hover::before {
-    opacity: 1;
-  }
-  
-  .tag {
-    border-radius: 9999px;
-    border: 1px solid var(--card-border);
-    background-color: rgba(13, 22, 41, 0.3);
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-  }
-  
-  .nav-link {
-    color: var(--secondary);
-    transition: color 0.2s ease;
-  }
-  
-  .nav-link:hover {
-    color: var(--accent);
-  }
-  
-  .section-heading {
-    margin-bottom: 2rem;
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
 }
