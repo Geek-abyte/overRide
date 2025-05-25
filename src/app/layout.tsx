@@ -34,6 +34,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${pixelifySans.variable} antialiased`}
+        suppressHydrationWarning
       >
         <MinecraftCursor />
         {children}

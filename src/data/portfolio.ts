@@ -1,141 +1,197 @@
 // Portfolio data for Jeremiah Oladele
 
-export const personalData = {
-  name: "Jeremiah Oladele",
-  title: "Software Developer",
-  email: "jeremiah.oladele@example.com",
-  location: "Lagos, Nigeria",
-  availability: "Available for new opportunities",
-  about: `
-    I'm a software developer with a passion for building exceptional digital experiences. 
-    Like crafting in Minecraft, I enjoy building things from scratch and seeing them come to life. 
-    I specialize in creating efficient, maintainable, and scalable applications 
-    that solve real-world problems.
-  `,
+import defaultContent from '../../public/content.json';
+
+// A more robust content getter with optional fallbacks
+export function getContentWithFallback(content: any, path: string, fallback: any = null): any {
+  try {
+    const keys = path.split('.');
+    let result = content;
+    
+    for (const key of keys) {
+      if (result === undefined || result === null) return fallback;
+      result = result[key];
+    }
+    
+    return result !== undefined ? result : fallback;
+  } catch (error) {
+    console.warn(`Error getting content for path: ${path}`, error);
+    return fallback;
+  }
+}
+
+// Safe content accessors
+export const siteConfig = getContentWithFallback(defaultContent, 'siteConfig', {
+  title: 'Developer Portfolio',
+  sections: {
+    hero: { enabled: true },
+    about: { enabled: true },
+    experience: { enabled: true },
+    projects: { enabled: true },
+    skills: { enabled: true },
+    termsPricesChatbot: { enabled: true },
+    contact: { enabled: true }
+  }
+});
+
+export const personalData = getContentWithFallback(defaultContent, 'personalData', {
+  name: 'Developer',
+  title: 'Software Developer',
+  email: 'developer@example.com',
+  location: 'Earth',
+  availability: 'Available for new opportunities',
+  about: 'Software developer focused on creating amazing digital experiences.',
   socialLinks: {
-    github: "https://github.com/jeremiaholadele",
-    linkedin: "https://linkedin.com/in/jeremiaholadele",
-    twitter: "https://twitter.com/jeremiaholadele",
-  },
-};
+    github: 'https://github.com',
+    linkedin: 'https://linkedin.com',
+    twitter: 'https://twitter.com'
+  }
+});
 
-export const skills = [
-  {
-    category: "Frontend",
-    technologies: [
-      "JavaScript (ES6+)",
-      "TypeScript",
-      "React.js",
-      "Next.js",
-      "HTML & CSS",
-      "Tailwind CSS",
-    ],
-  },
-  {
-    category: "Backend",
-    technologies: ["Node.js", "Express", "Python", "Django", "MongoDB", "PostgreSQL"],
-  },
-  {
-    category: "Tools",
-    technologies: ["Git", "GitHub", "VS Code", "Docker", "Figma", "AWS"],
-  },
-];
+export const skills = getContentWithFallback(defaultContent, 'skills', []);
+export const projects = getContentWithFallback(defaultContent, 'projects', []);
+export const experience = getContentWithFallback(defaultContent, 'experience', []);
+export const navigation = getContentWithFallback(defaultContent, 'navigation', {
+  links: []
+});
 
-export const projects = [
-  {
-    id: 1,
-    title: "BlockCraft CMS",
-    description:
-      "A content management system built with React and Node.js, featuring real-time editing, custom block architecture, and responsive design.",
-    technologies: ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
-    github: "https://github.com/jeremiaholadele/blockcraft-cms",
-    demo: "https://blockcraft-cms.demo.com",
-    image: "/images/blockcraft-cms.jpg",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Pixel Analytics",
-    description:
-      "A data visualization dashboard that transforms complex data into easy-to-understand pixels. Built with React, D3.js, and Firebase.",
-    technologies: ["React", "D3.js", "Firebase", "TypeScript"],
-    github: "https://github.com/jeremiaholadele/pixel-analytics",
-    demo: "https://pixel-analytics.demo.com",
-    image: "/images/pixel-analytics.jpg",
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "CubeWorld E-commerce",
-    description:
-      "A full-stack e-commerce platform with pixel-perfect UI, cart functionality, and payment processing.",
-    technologies: ["Next.js", "MongoDB", "Stripe", "Tailwind CSS"],
-    github: "https://github.com/jeremiaholadele/cubeworld-ecommerce",
-    demo: "https://cubeworld-shop.demo.com",
-    image: "/images/cubeworld-ecommerce.jpg",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "MineTask",
-    description:
-      "A task management application with a Minecraft-inspired UI, featuring drag-and-drop functionality and progress tracking.",
-    technologies: ["Vue.js", "Firebase", "CSS3"],
-    github: "https://github.com/jeremiaholadele/minetask",
-    demo: "https://minetask.demo.com",
-    image: "/images/minetask.jpg",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "BlockChat",
-    description:
-      "A real-time chat application with block-based UI elements, user authentication, and message encryption.",
-    technologies: ["React", "Socket.io", "Express", "MongoDB"],
-    github: "https://github.com/jeremiaholadele/blockchat",
-    demo: "https://blockchat.demo.com",
-    image: "/images/blockchat.jpg",
-    featured: false,
-  },
-];
+// Fix the direct reference to personalData which can cause initialization issues
+const defaultEmail = "jeremiah.oladele@example.com";
 
-export const experience = [
-  {
-    id: 1,
-    position: "Senior Frontend Developer",
-    company: "BlockTech Solutions",
-    location: "Lagos, Nigeria",
-    duration: "January 2023 - Present",
-    responsibilities: [
-      "Lead a team of 5 developers in building responsive and accessible web applications",
-      "Implemented CI/CD pipelines that reduced deployment time by 40%",
-      "Refactored legacy codebase to modern React patterns, improving performance by 30%",
-      "Mentored junior developers through code reviews and pair programming sessions",
+export const chatbotData = getContentWithFallback(defaultContent, 'chatbotData', {
+  terms: [
+    "All projects require a 30% upfront deposit.",
+    "Revisions are included up to 2 rounds per project.",
+    "Source code is delivered upon final payment.",
+    "Support is available for 30 days after delivery."
+  ],
+  prices: [
+    { service: "Landing Page", price: "$400" },
+    { service: "Full Website", price: "$1200+" },
+    { service: "Web App (MVP)", price: "$2000+" },
+    { service: "Consultation (per hour)", price: "$50" }
+  ],
+  services: [
+    {
+      name: "Landing Page",
+      title: "Landing Page",
+      description: "A single-page website designed to convert visitors into leads or customers.",
+      features: [
+        "Responsive design for all devices",
+        "Contact form integration",
+        "SEO optimization",
+        "Analytics setup",
+        "2 rounds of revisions included"
+      ],
+      price: "$400"
+    },
+    {
+      name: "Full Website",
+      title: "Full Website",
+      description: "A complete multi-page website with custom design and functionality.",
+      features: [
+        "Up to 5 pages of content",
+        "Content Management System",
+        "Mobile-responsive design",
+        "SEO optimization",
+        "Contact form and social media integration",
+        "2 rounds of revisions included"
+      ],
+      price: "$1200+"
+    },
+    {
+      name: "Web App",
+      title: "Web App (MVP)",
+      description: "A functional web application with user accounts and custom functionality.",
+      features: [
+        "User authentication system",
+        "Database integration",
+        "Custom functionality based on requirements",
+        "Admin panel",
+        "API integrations",
+        "2 rounds of revisions included"
+      ],
+      price: "$2000+"
+    }
+  ],
+  paymentInfo: {
+    steps: [
+      "30% deposit to begin the project",
+      "40% after initial designs/development is approved",
+      "30% before final delivery of all files/code"
     ],
+    methods: [
+      "Bank transfer",
+      "Credit card",
+      "PayPal"
+    ]
   },
-  {
-    id: 2,
-    position: "Full Stack Developer",
-    company: "Pixel Perfect Agency",
-    location: "Remote",
-    duration: "June 2021 - December 2022",
-    responsibilities: [
-      "Developed full-stack web applications using React, Node.js, and MongoDB",
-      "Implemented RESTful APIs that handled over 1M requests per day",
-      "Collaborated with designers to implement pixel-perfect UIs with responsive designs",
-      "Optimized database queries, reducing load times by 50%",
+  processSteps: [
+    {
+      title: "Initial Consultation",
+      description: "We'll discuss your needs, goals, and vision for the project."
+    },
+    {
+      title: "Proposal & Timeline",
+      description: "You'll receive a detailed proposal with pricing, timeline, and deliverables."
+    },
+    {
+      title: "Design Phase",
+      description: "We'll create mockups and wireframes for your review and feedback."
+    },
+    {
+      title: "Development",
+      description: "Your project will be built according to the approved designs."
+    },
+    {
+      title: "Testing & Revisions",
+      description: "We'll test everything and make revisions based on your feedback."
+    },
+    {
+      title: "Launch & Support",
+      description: "Your project goes live, with 30 days of support included."
+    }
+  ],
+  revisionPolicy: {
+    standardRevisions: "All projects include two rounds of revisions at no additional cost.",
+    revisionItems: [
+      "Design adjustments within the approved concept",
+      "Minor content changes",
+      "Color and typography adjustments",
+      "Layout refinements"
     ],
+    additionalRevisions: "After the included revision rounds, additional revisions are billed at our hourly rate."
   },
-  {
-    id: 3,
-    position: "Frontend Developer",
-    company: "CubeTech Innovations",
-    location: "Abuja, Nigeria",
-    duration: "February 2020 - May 2021",    responsibilities: [
-      "Built and maintained responsive websites using HTML, CSS, and JavaScript",
-      "Implemented new features and fixed bugs in existing applications",
-      "Collaborated with designers and backend developers to create cohesive user experiences",
-      "Participated in code reviews and contributed to team documentation",
-    ],
-  },
-];
+  contactInfo: {
+    email: defaultEmail,
+    phone: "(123) 456-7890",
+    responseTime: "We typically respond to all inquiries within 24 hours during business days."
+  }
+});
+
+export const footerContent = getContentWithFallback(defaultContent, 'footerContent', {
+  copyright: `© ${new Date().getFullYear()} All rights reserved.`
+});
+
+// Function to refresh content for client-side updates
+export async function refreshContent() {
+  try {
+    const response = await fetch('/api/content');
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch content: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error refreshing content:', error);
+    // Return default content if fetching fails
+    return defaultContent;
+  }
+}
+
+// Function to check if a section is enabled
+export function isSectionEnabled(sectionName: string): boolean {
+  return getContentWithFallback(siteConfig, `sections.${sectionName}.enabled`, true);
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -8,10 +8,33 @@ import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
+import TermsPricesChatbot from "@/components/sections/TermsPricesChatbot";
 import Footer from "@/components/layout/Footer";
 import BackgroundDecoration from "@/components/ui/BackgroundDecoration";
+import { refreshContent } from "@/data/portfolio";
 
 export default function Home() {
+  const [siteConfig, setSiteConfig] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  
+  // Get site configuration on load
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const content = await refreshContent();
+        if (content && content.siteConfig) {
+          setSiteConfig(content.siteConfig);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error loading site configuration:", error);
+        setLoading(false);
+      }
+    };
+    
+    loadContent();
+  }, []);
+
   // Smooth scrolling for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
@@ -30,19 +53,28 @@ export default function Home() {
     return () => document.removeEventListener('click', handleAnchorClick as EventListener);
   }, []);
 
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+      <div className="animate-pulse text-[var(--primary)]">Loading...</div>
+    </div>;
+  }
+
   return (
     <div className="relative min-h-screen bg-[var(--background)]">
       <BackgroundDecoration />
       <Header />
       <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Contact />
+        {/* Render sections conditionally based on config */}
+        {(!siteConfig || siteConfig.sections.hero.enabled) && <Hero />}
+        {(!siteConfig || siteConfig.sections.about.enabled) && <About />}
+        {(!siteConfig || siteConfig.sections.experience.enabled) && <Experience />}
+        {(!siteConfig || siteConfig.sections.projects.enabled) && <Projects />}
+        {(!siteConfig || siteConfig.sections.skills.enabled) && <Skills />}
+        {(!siteConfig || siteConfig.sections.contact.enabled) && <Contact />}
       </main>
       <Footer />
+      {/* Floating chatbot - always rendered regardless of section config */}
+      <TermsPricesChatbot />
     </div>
   );
 }
