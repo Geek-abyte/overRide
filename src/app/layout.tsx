@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import MinecraftCursor from "@/components/ui/MinecraftCursor";
+import { ContentProvider } from "@/context/ContentContext";
 
 const pixelifySans = Pixelify_Sans({
   variable: "--font-pixelify-sans",
@@ -37,7 +38,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <MinecraftCursor />
-        {children}
+        <ContentProvider>
+          {children}
+        </ContentProvider>
       </body>
     </html>
   );

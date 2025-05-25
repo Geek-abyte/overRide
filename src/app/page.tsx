@@ -11,30 +11,17 @@ import Contact from "@/components/sections/Contact";
 import TermsPricesChatbot from "@/components/sections/TermsPricesChatbot";
 import Footer from "@/components/layout/Footer";
 import BackgroundDecoration from "@/components/ui/BackgroundDecoration";
-import { refreshContent } from "@/data/portfolio";
+import { useContent } from "@/context/ContentContext";
 
 export default function Home() {
-  const [siteConfig, setSiteConfig] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  
-  // Get site configuration on load
-  useEffect(() => {
-    const loadContent = async () => {
-      try {
-        const content = await refreshContent();
-        if (content && content.siteConfig) {
-          setSiteConfig(content.siteConfig);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Error loading site configuration:", error);
-        setLoading(false);
-      }
-    };
-    
-    loadContent();
-  }, []);
+  const { content, refreshing } = useContent();
+  const [isClient, setIsClient] = useState(false);
 
+  // Check if we're running on the client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   // Smooth scrolling for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
@@ -53,11 +40,22 @@ export default function Home() {
     return () => document.removeEventListener('click', handleAnchorClick as EventListener);
   }, []);
 
-  if (loading) {
+  if (!isClient || (!content && refreshing)) {
     return <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
       <div className="animate-pulse text-[var(--primary)]">Loading...</div>
     </div>;
   }
+
+  const siteConfig = content?.siteConfig || {
+    sections: {
+      hero: { enabled: true },
+      about: { enabled: true },
+      experience: { enabled: true },
+      projects: { enabled: true },
+      skills: { enabled: true },
+      contact: { enabled: true }
+    }
+  };
 
   return (
     <div className="relative min-h-screen bg-[var(--background)]">

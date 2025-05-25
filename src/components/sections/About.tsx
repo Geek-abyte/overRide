@@ -1,7 +1,14 @@
 import { motion } from 'framer-motion';
 import { personalData } from '@/data/portfolio';
+import { useContent } from '@/context/ContentContext';
 
 const About = () => {
+  // Get fresh content from context
+  const { content } = useContent();
+  
+  // Use context data if available, fall back to imported data
+  const aboutData = content?.personalData || personalData;
+  
   return (
     <section id="about" className="py-20 bg-[var(--background)]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +25,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2">
               <p className="text-lg text-[var(--foreground)] opacity-90 mb-6 font-secondary">
-                {personalData.about}
+                {aboutData.about}
               </p>
               
               <p className="text-lg text-[var(--foreground)] opacity-90 mb-6 font-secondary">
@@ -35,11 +42,11 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-4 text-[var(--primary)] font-main">Current Status</h3>
                 <div className="flex items-center mb-2">
                   <div className="w-3 h-3 rounded-full bg-[var(--grass)] mr-3 animate-pulse"></div>
-                  <span className="text-[var(--foreground)] font-secondary">{personalData.availability}</span>
+                  <span className="text-[var(--foreground)] font-secondary">{aboutData.availability}</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-3 h-3 rounded-full bg-[var(--stone)] mr-3"></div>
-                  <span className="text-[var(--foreground)]">Based in {personalData.location}</span>
+                  <span className="text-[var(--foreground)]">Based in {aboutData.location}</span>
                 </div>
               </div>
             </div>

@@ -1,14 +1,24 @@
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { personalData } from '@/data/portfolio';
+import { useContent } from '@/context/ContentContext';
 import Image from 'next/image';
 
 const Hero = () => {  
-  const nameLetters = "Jeremiah Oladele".split('');
-  const titleLetters = "I build digital experiences".split('');
-
+  const { content } = useContent();
+  // Use context data if available, fall back to imported data
+  const heroData = content?.personalData || personalData;
+  
+  // Generate name letters dynamically from the data
+  const [nameLetters, setNameLetters] = useState<string[]>([]);
+  const [titleLetters, setTitleLetters] = useState<string[]>([]);
+  
   useEffect(() => {
+    // Update letter arrays when data changes
+    setNameLetters(heroData.name.split(''));
+    setTitleLetters(heroData.tagline ? heroData.tagline.split('') : "I build digital experiences".split(''));
+    
     // Animation for name letters with staggered delay
     const nameLetters = document.querySelectorAll('.name-letters span');
     nameLetters.forEach((letter, index) => {
@@ -20,7 +30,7 @@ const Hero = () => {
     titleLetters.forEach((letter, index) => {
       (letter as HTMLElement).style.animationDelay = `${index * 0.08 + 0.5}s`;
     });
-  }, []);
+  }, [heroData]);
   
   // Profile image component that can be reused
   const ProfileImage = () => (
@@ -38,8 +48,8 @@ const Hero = () => {
             <div className="text-center p-4 sm:p-6 relative">
               <div className="w-28 h-28 sm:w-40 sm:h-40 mx-auto mb-3 sm:mb-4 rounded-lg border-4 border-[var(--stone)] shadow-lg pixelated animate-[float_4s_ease-in-out_infinite] relative overflow-hidden">
                 <Image 
-                  src="/images/pixeljerry.png" 
-                  alt="Pixel Jerry" 
+                  src={heroData.profileImage || "/images/pixeljerry.png"}
+                  alt={heroData.name}
                   width={160}
                   height={160}
                   className="w-full h-full object-cover pixelated"
@@ -48,8 +58,8 @@ const Hero = () => {
                 <div className="absolute -top-6 -right-6 w-8 h-8 bg-[var(--grass)] rounded-sm rotate-12 animate-pulse"></div>
                 <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-[var(--dirt)] rounded-sm -rotate-12 animate-pulse" style={{ animationDelay: '0.7s' }}></div>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[var(--foreground)] minecraft-pixelated-text">{personalData.name}</h3>
-              <p className="text-xs sm:text-sm text-[var(--foreground)] opacity-80 minecraft-pixelated-text">{personalData.title}</p>
+              <h3 className="text-lg sm:text-xl font-bold text-[var(--foreground)] minecraft-pixelated-text">{heroData.name}</h3>
+              <p className="text-xs sm:text-sm text-[var(--foreground)] opacity-80 minecraft-pixelated-text">{heroData.title}</p>
               <div className="mt-4 flex justify-center space-x-2">
                 <span className="inline-block w-3 h-3 bg-[var(--grass)] rounded-full animate-pulse"></span>
                 <span className="inline-block w-3 h-3 bg-[var(--stone)] rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></span>
@@ -197,7 +207,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-base sm:text-lg md:text-xl font-secondary text-[var(--foreground)] mb-4 sm:mb-6 max-w-2xl"
             >
-              {personalData.about.split(' ').map((word, i) => (
+              {heroData.about.split(' ').map((word, i) => (
                 <span 
                   key={i} 
                   className="inline-block mr-1"
@@ -241,48 +251,37 @@ const Hero = () => {
               className="flex space-x-5 mt-6 sm:mt-8"
             >
               <a 
-                href={personalData.socialLinks.github} 
+                href={heroData.socialLinks.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors transform hover:scale-110 transition-transform duration-200"
                 aria-label="GitHub"
               >
-                <FaGithub size={22} className="sm:text-2xl" style={{ 
-                  display: 'inline-block',
-                  animation: 'pixel-bounce 2s ease-in-out infinite'
-                }} />
+                <FaGithub size={22} className="sm:text-2xl" />
               </a>
               <a 
-                href={personalData.socialLinks.linkedin} 
+                href={heroData.socialLinks.linkedin}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors transform hover:scale-110 transition-transform duration-200"
                 aria-label="LinkedIn"
               >
-                <FaLinkedin size={22} className="sm:text-2xl" style={{ 
-                  display: 'inline-block',
-                  animation: 'pixel-bounce 2s ease-in-out infinite',
-                  animationDelay: '0.1s'
-                }} />
+                <FaLinkedin size={22} className="sm:text-2xl" />
               </a>
               <a 
-                href={personalData.socialLinks.twitter} 
+                href={heroData.socialLinks.twitter}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors transform hover:scale-110 transition-transform duration-200"
                 aria-label="Twitter"
               >
-                <FaTwitter size={22} className="sm:text-2xl" style={{ 
-                  display: 'inline-block',
-                  animation: 'pixel-bounce 2s ease-in-out infinite',
-                  animationDelay: '0.2s'
-                }} />
+                <FaTwitter size={22} className="sm:text-2xl" />
               </a>
             </motion.div>
           </div>
           
-          {/* Image for desktop only - hidden on mobile */}
-          <div className="lg:col-span-5 hidden lg:flex items-center justify-center">
+          {/* Profile Image - Hidden on mobile, visible on lg screens */}
+          <div className="hidden lg:block lg:col-span-5">
             <ProfileImage />
           </div>
         </div>

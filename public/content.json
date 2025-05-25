@@ -134,11 +134,25 @@
     },
     {
       "category": "Backend",
-      "technologies": ["Node.js", "Express", "Python", "Django", "MongoDB", "PostgreSQL"]
+      "technologies": [
+        "Node.js",
+        "Express",
+        "Python",
+        "Django",
+        "MongoDB",
+        "PostgreSQL"
+      ]
     },
     {
       "category": "Tools",
-      "technologies": ["Git", "GitHub", "VS Code", "Docker", "Figma", "AWS"]
+      "technologies": [
+        "Git",
+        "GitHub",
+        "VS Code",
+        "Docker",
+        "Figma",
+        "AWS"
+      ]
     }
   ],
   "projects": [
@@ -146,7 +160,13 @@
       "id": 1,
       "title": "BlockCraft CMS",
       "description": "A content management system built with React and Node.js, featuring real-time editing, custom block architecture, and responsive design.",
-      "technologies": ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
+      "technologies": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Express",
+        "Tailwind CSS"
+      ],
       "github": "https://github.com/jeremiaholadele/blockcraft-cms",
       "demo": "https://blockcraft-cms.demo.com",
       "image": "/images/blockcraft-cms.jpg",
@@ -156,7 +176,12 @@
       "id": 2,
       "title": "Pixel Analytics",
       "description": "A data visualization dashboard that transforms complex data into easy-to-understand pixels. Built with React, D3.js, and Firebase.",
-      "technologies": ["React", "D3.js", "Firebase", "TypeScript"],
+      "technologies": [
+        "React",
+        "D3.js",
+        "Firebase",
+        "TypeScript"
+      ],
       "github": "https://github.com/jeremiaholadele/pixel-analytics",
       "demo": "https://pixel-analytics.demo.com",
       "image": "/images/pixel-analytics.jpg",
@@ -166,7 +191,12 @@
       "id": 3,
       "title": "CubeWorld E-commerce",
       "description": "A full-stack e-commerce platform with pixel-perfect UI, cart functionality, and payment processing.",
-      "technologies": ["Next.js", "MongoDB", "Stripe", "Tailwind CSS"],
+      "technologies": [
+        "Next.js",
+        "MongoDB",
+        "Stripe",
+        "Tailwind CSS"
+      ],
       "github": "https://github.com/jeremiaholadele/cubeworld-ecommerce",
       "demo": "https://cubeworld-shop.demo.com",
       "image": "/images/cubeworld-ecommerce.jpg",
@@ -176,7 +206,11 @@
       "id": 4,
       "title": "MineTask",
       "description": "A task management application with a Minecraft-inspired UI, featuring drag-and-drop functionality and progress tracking.",
-      "technologies": ["Vue.js", "Firebase", "CSS3"],
+      "technologies": [
+        "Vue.js",
+        "Firebase",
+        "CSS3"
+      ],
       "github": "https://github.com/jeremiaholadele/minetask",
       "demo": "https://minetask.demo.com",
       "image": "/images/minetask.jpg",
@@ -186,7 +220,12 @@
       "id": 5,
       "title": "BlockChat",
       "description": "A real-time chat application with block-based UI elements, user authentication, and message encryption.",
-      "technologies": ["React", "Socket.io", "Express", "MongoDB"],
+      "technologies": [
+        "React",
+        "Socket.io",
+        "Express",
+        "MongoDB"
+      ],
       "github": "https://github.com/jeremiaholadele/blockchat",
       "demo": "https://blockchat.demo.com",
       "image": "/images/blockchat.jpg",
@@ -258,10 +297,22 @@
       "Support is available for 30 days after delivery."
     ],
     "prices": [
-      { "service": "Landing Page", "price": "$400" },
-      { "service": "Full Website", "price": "$1200+" },
-      { "service": "Web App (MVP)", "price": "$2000+" },
-      { "service": "Consultation (per hour)", "price": "$50" }
+      {
+        "service": "Landing Page",
+        "price": "$400"
+      },
+      {
+        "service": "Full Website",
+        "price": "$1200+"
+      },
+      {
+        "service": "Web App (MVP)",
+        "price": "$2000+"
+      },
+      {
+        "service": "Consultation (per hour)",
+        "price": "$50"
+      }
     ],
     "services": [
       {
@@ -369,4 +420,4 @@
       "responseTime": "We typically respond to all inquiries within 24 hours during business days."
     }
   }
-} 
+}

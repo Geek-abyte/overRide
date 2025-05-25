@@ -176,7 +176,9 @@ export const footerContent = getContentWithFallback(defaultContent, 'footerConte
 // Function to refresh content for client-side updates
 export async function refreshContent() {
   try {
-    const response = await fetch('/api/content');
+    // Add a timestamp parameter to prevent caching
+    const timestamp = new Date().getTime();
+    const response = await fetch(`/api/content?t=${timestamp}`);
     
     if (!response.ok) {
       throw new Error(`Failed to fetch content: ${response.status}`);
