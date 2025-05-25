@@ -231,7 +231,6 @@ export default function AdminPage() {
       
       console.log('Saving content:', {
         section: selectedSection,
-        apiKey: apiKey ? "Provided" : "Not provided"
       });
       
       // Send the updated content to the API
@@ -243,7 +242,7 @@ export default function AdminPage() {
         body: JSON.stringify({
           section: selectedSection,
           data: parsedContent,
-          apiKey: apiKey
+          // Removed apiKey from request since we disabled validation
         }),
       });
 

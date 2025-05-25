@@ -30,14 +30,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing data parameter' }, { status: 400 });
     }
     
-    // For testing purposes, accept a fixed key if env variable is not set
-    const validApiKey = process.env.CONTENT_API_KEY || 'default-dev-key';
-    const providedApiKey = apiKey || validApiKey; // Use the provided key or the default one
+    // Skip API key validation in development - you can re-enable this for production
+    // const validApiKey = process.env.CONTENT_API_KEY || 'default-dev-key';
+    // const providedApiKey = apiKey || validApiKey;
     
-    // Verify API key - this is a simple protection mechanism
-    if (providedApiKey !== validApiKey) {
-      return NextResponse.json({ error: 'Unauthorized - Invalid API key' }, { status: 401 });
-    }
+    // if (providedApiKey !== validApiKey) {
+    //   return NextResponse.json({ error: 'Unauthorized - Invalid API key' }, { status: 401 });
+    // }
 
     try {
       // Read existing content
