@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Path to the content file
 const contentFilePath = path.join(process.cwd(), 'public', 'content.json');
+const tempContentFilePath = path.join(process.cwd(), 'public', 'content.json.tmp');
 
 // Get content
 export async function GET() {
@@ -20,7 +21,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { section, data, apiKey } = body;
+    const { section, data } = body;
     
     if (!section) {
       return NextResponse.json({ error: 'Missing section parameter' }, { status: 400 });
@@ -39,9 +40,26 @@ export async function POST(request: NextRequest) {
     // }
 
     try {
+      console.log('Reading content file from:', contentFilePath);
+      
       // Read existing content
-      const contentJson = await fs.readFile(contentFilePath, 'utf8');
-      const content = JSON.parse(contentJson);
+      let contentJson;
+      try {
+        contentJson = await fs.readFile(contentFilePath, 'utf8');
+        console.log('Successfully read content file');
+      } catch (readFileError: any) {
+        console.error('Error reading content file:', readFileError);
+        return NextResponse.json({ error: `Failed to read content file: ${readFileError.message}` }, { status: 500 });
+      }
+      
+      let content;
+      try {
+        content = JSON.parse(contentJson);
+        console.log('Successfully parsed content JSON');
+      } catch (parseError: any) {
+        console.error('Error parsing content JSON:', parseError);
+        return NextResponse.json({ error: `Failed to parse content JSON: ${parseError.message}` }, { status: 500 });
+      }
       
       // Update only the specified section
       if (section) {
@@ -59,17 +77,36 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // Write updated content back to file
-      await fs.writeFile(contentFilePath, JSON.stringify(content, null, 2), 'utf8');
+      // Write to a temporary file first
+      try {
+        const contentString = JSON.stringify(content, null, 2);
+        
+        // Write to temp file
+        await fs.writeFile(tempContentFilePath, contentString, 'utf8');
+        console.log('Successfully wrote to temporary file');
+        
+        // Rename temp file to final file (atomic operation)
+        await fs.rename(tempContentFilePath, contentFilePath);
+        console.log(`Content updated successfully for section: ${section}`);
+      } catch (writeError: any) {
+        console.error('Error writing to content file:', writeError);
+        // Try to clean up temp file if it exists
+        try {
+          await fs.access(tempContentFilePath);
+          await fs.unlink(tempContentFilePath);
+        } catch (e) {
+          // Ignore errors during cleanup
+        }
+        return NextResponse.json({ error: `Failed to write to content file: ${writeError.message}` }, { status: 500 });
+      }
       
-      console.log(`Content updated successfully for section: ${section}`);
       return NextResponse.json({ success: true }, { status: 200 });
-    } catch (readError) {
-      console.error('Error reading or parsing content file:', readError);
-      return NextResponse.json({ error: 'Failed to read or parse content file' }, { status: 500 });
+    } catch (processError: any) {
+      console.error('Error processing content:', processError);
+      return NextResponse.json({ error: `Failed to process content: ${processError.message}` }, { status: 500 });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing content update request:', error);
-    return NextResponse.json({ error: 'Failed to update content' }, { status: 500 });
+    return NextResponse.json({ error: `Failed to update content: ${error.message}` }, { status: 500 });
   }
 } 
